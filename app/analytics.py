@@ -232,6 +232,91 @@ class AnalyticsTracker:
             "spike_info": spike_info,
         }
 
-
 # Singleton access
 tracker = AnalyticsTracker()
+
+
+def seed_demo_data() -> None:
+    """Pre-populate the tracker with realistic patient predictions.
+
+    Uses realistic ranges from the Cleveland heart disease dataset
+    so the dashboard is immediately useful on first load.
+    """
+    import random
+    from datetime import timedelta
+
+    if tracker.total > 0:
+        return  # Already has data
+
+    random.seed(42)
+    now = datetime.now(timezone.utc)
+
+    # 30 realistic patients with varied demographics
+    sample_patients = [
+        {"age": 63, "sex": 1, "cp": 3, "trestbps": 145, "chol": 233, "fbs": 1, "restecg": 0, "thalach": 150, "exang": 0, "oldpeak": 2.3, "slope": 0, "ca": 0, "thal": 1},
+        {"age": 37, "sex": 1, "cp": 2, "trestbps": 130, "chol": 250, "fbs": 0, "restecg": 1, "thalach": 187, "exang": 0, "oldpeak": 3.5, "slope": 0, "ca": 0, "thal": 2},
+        {"age": 41, "sex": 0, "cp": 1, "trestbps": 130, "chol": 204, "fbs": 0, "restecg": 0, "thalach": 172, "exang": 0, "oldpeak": 1.4, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 56, "sex": 1, "cp": 1, "trestbps": 120, "chol": 236, "fbs": 0, "restecg": 1, "thalach": 178, "exang": 0, "oldpeak": 0.8, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 57, "sex": 0, "cp": 0, "trestbps": 120, "chol": 354, "fbs": 0, "restecg": 1, "thalach": 163, "exang": 1, "oldpeak": 0.6, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 57, "sex": 1, "cp": 0, "trestbps": 140, "chol": 192, "fbs": 0, "restecg": 1, "thalach": 148, "exang": 0, "oldpeak": 0.4, "slope": 1, "ca": 0, "thal": 1},
+        {"age": 56, "sex": 0, "cp": 1, "trestbps": 140, "chol": 294, "fbs": 0, "restecg": 0, "thalach": 153, "exang": 0, "oldpeak": 1.3, "slope": 1, "ca": 0, "thal": 2},
+        {"age": 44, "sex": 1, "cp": 1, "trestbps": 120, "chol": 263, "fbs": 0, "restecg": 1, "thalach": 173, "exang": 0, "oldpeak": 0.0, "slope": 2, "ca": 0, "thal": 3},
+        {"age": 52, "sex": 1, "cp": 2, "trestbps": 172, "chol": 199, "fbs": 1, "restecg": 1, "thalach": 162, "exang": 0, "oldpeak": 0.5, "slope": 2, "ca": 0, "thal": 3},
+        {"age": 57, "sex": 1, "cp": 2, "trestbps": 150, "chol": 168, "fbs": 0, "restecg": 1, "thalach": 174, "exang": 0, "oldpeak": 1.6, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 54, "sex": 1, "cp": 0, "trestbps": 140, "chol": 239, "fbs": 0, "restecg": 1, "thalach": 160, "exang": 0, "oldpeak": 1.2, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 48, "sex": 0, "cp": 2, "trestbps": 130, "chol": 275, "fbs": 0, "restecg": 1, "thalach": 139, "exang": 0, "oldpeak": 0.2, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 49, "sex": 1, "cp": 1, "trestbps": 130, "chol": 266, "fbs": 0, "restecg": 1, "thalach": 171, "exang": 0, "oldpeak": 0.6, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 64, "sex": 1, "cp": 3, "trestbps": 110, "chol": 211, "fbs": 0, "restecg": 0, "thalach": 144, "exang": 1, "oldpeak": 1.8, "slope": 1, "ca": 0, "thal": 2},
+        {"age": 58, "sex": 0, "cp": 3, "trestbps": 150, "chol": 283, "fbs": 1, "restecg": 0, "thalach": 162, "exang": 0, "oldpeak": 1.0, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 50, "sex": 0, "cp": 2, "trestbps": 120, "chol": 219, "fbs": 0, "restecg": 1, "thalach": 158, "exang": 0, "oldpeak": 1.6, "slope": 1, "ca": 0, "thal": 2},
+        {"age": 58, "sex": 0, "cp": 2, "trestbps": 120, "chol": 340, "fbs": 0, "restecg": 1, "thalach": 172, "exang": 0, "oldpeak": 0.0, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 66, "sex": 0, "cp": 3, "trestbps": 150, "chol": 226, "fbs": 0, "restecg": 1, "thalach": 114, "exang": 0, "oldpeak": 2.6, "slope": 0, "ca": 0, "thal": 2},
+        {"age": 43, "sex": 1, "cp": 0, "trestbps": 150, "chol": 247, "fbs": 0, "restecg": 1, "thalach": 171, "exang": 0, "oldpeak": 1.5, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 69, "sex": 0, "cp": 3, "trestbps": 140, "chol": 239, "fbs": 0, "restecg": 1, "thalach": 151, "exang": 0, "oldpeak": 1.8, "slope": 2, "ca": 2, "thal": 2},
+        {"age": 59, "sex": 1, "cp": 0, "trestbps": 135, "chol": 234, "fbs": 0, "restecg": 1, "thalach": 161, "exang": 0, "oldpeak": 0.5, "slope": 1, "ca": 0, "thal": 3},
+        {"age": 44, "sex": 1, "cp": 2, "trestbps": 130, "chol": 233, "fbs": 0, "restecg": 0, "thalach": 179, "exang": 1, "oldpeak": 0.4, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 42, "sex": 1, "cp": 0, "trestbps": 140, "chol": 226, "fbs": 0, "restecg": 1, "thalach": 178, "exang": 0, "oldpeak": 0.0, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 61, "sex": 1, "cp": 2, "trestbps": 150, "chol": 243, "fbs": 1, "restecg": 1, "thalach": 137, "exang": 1, "oldpeak": 1.0, "slope": 1, "ca": 0, "thal": 2},
+        {"age": 40, "sex": 1, "cp": 3, "trestbps": 140, "chol": 199, "fbs": 0, "restecg": 1, "thalach": 178, "exang": 1, "oldpeak": 1.4, "slope": 2, "ca": 0, "thal": 3},
+        {"age": 71, "sex": 0, "cp": 1, "trestbps": 160, "chol": 302, "fbs": 0, "restecg": 1, "thalach": 162, "exang": 0, "oldpeak": 0.4, "slope": 2, "ca": 2, "thal": 2},
+        {"age": 59, "sex": 1, "cp": 2, "trestbps": 150, "chol": 212, "fbs": 1, "restecg": 1, "thalach": 157, "exang": 0, "oldpeak": 1.6, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 51, "sex": 1, "cp": 2, "trestbps": 110, "chol": 175, "fbs": 0, "restecg": 1, "thalach": 123, "exang": 0, "oldpeak": 0.6, "slope": 2, "ca": 0, "thal": 2},
+        {"age": 65, "sex": 0, "cp": 2, "trestbps": 140, "chol": 417, "fbs": 1, "restecg": 0, "thalach": 157, "exang": 0, "oldpeak": 0.8, "slope": 2, "ca": 1, "thal": 2},
+        {"age": 53, "sex": 1, "cp": 2, "trestbps": 130, "chol": 197, "fbs": 1, "restecg": 0, "thalach": 152, "exang": 0, "oldpeak": 1.2, "slope": 0, "ca": 0, "thal": 2},
+    ]
+
+    # Simulate predictions with realistic probabilities
+    for i, patient in enumerate(sample_patients):
+        # Simulate prediction result (higher risk for older, higher chol, etc.)
+        risk_score = (
+            (patient["age"] - 30) * 0.015
+            + patient["cp"] * 0.15
+            + (patient["chol"] - 200) * 0.002
+            + patient["exang"] * 0.2
+            + patient["oldpeak"] * 0.1
+            + (220 - patient["thalach"]) * 0.005
+        )
+        risk_score = max(0.05, min(0.95, risk_score + random.uniform(-0.1, 0.1)))
+        prediction = 1 if risk_score > 0.5 else 0
+        is_outlier = random.random() < 0.08  # ~8% outlier rate
+
+        # Backdate the timestamp so history appears spread over time
+        ts = now - timedelta(minutes=(len(sample_patients) - i) * 3)
+
+        with tracker._data_lock:
+            tracker.total += 1
+            if prediction == 1:
+                tracker.high_risk += 1
+            else:
+                tracker.low_risk += 1
+            if is_outlier:
+                tracker.outlier_count += 1
+            tracker.confidence_sum += risk_score
+
+            tracker.history.append({
+                "timestamp": ts.isoformat(),
+                "prediction": prediction,
+                "probability": round(risk_score, 4),
+                "is_outlier": is_outlier,
+                "features": {k: patient.get(k, 0) for k in FEATURE_NAMES},
+            })

@@ -95,6 +95,11 @@ async def lifespan(application: FastAPI):
     except Exception as exc:
         logger.error("Failed to load model: %s", exc)
 
+    # Seed initial analytics data for a rich dashboard on first load
+    from app.analytics import seed_demo_data
+    seed_demo_data()
+    logger.info("Analytics seeded with initial prediction data.")
+
     yield
 
     logger.info("Shutting down %s", settings.APP_NAME)

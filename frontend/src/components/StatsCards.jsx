@@ -8,8 +8,8 @@ const StatsCards = ({ stats }) => {
 
     const cards = [
         { icon: '🫀', label: 'Total Predictions', value: stats.total_predictions ?? 0, color: 'var(--heart-primary)', suffix: '' },
-        { icon: '⚡', label: 'High Risk Cases', value: stats.positive_predictions ?? 0, color: 'var(--danger)', suffix: '' },
-        { icon: '💚', label: 'Low Risk Cases', value: stats.negative_predictions ?? 0, color: 'var(--success)', suffix: '' },
+        { icon: '⚡', label: 'High Risk Cases', value: stats.high_risk_count ?? 0, color: 'var(--danger)', suffix: '' },
+        { icon: '💚', label: 'Low Risk Cases', value: stats.low_risk_count ?? 0, color: 'var(--success)', suffix: '' },
         { icon: '📊', label: 'Avg Confidence', value: stats.average_confidence ? Math.round(stats.average_confidence * 100) : 0, color: 'var(--med-primary)', suffix: '%' },
     ];
 
