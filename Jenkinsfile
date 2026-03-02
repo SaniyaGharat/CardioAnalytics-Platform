@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/SaniyaGharat/CardioAnalytics-Platform.git'
+                    url: 'https://github.com/Suryanshsaraf/DEVOPS-APDD.git'
             }
         }
 
