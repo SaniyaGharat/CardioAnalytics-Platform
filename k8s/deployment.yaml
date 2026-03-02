@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: ml-prediction-api
-          image: your-dockerhub-username/ml-prediction-api:latest
+          image: saniyagharat25/cardioanalytics:12
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
