@@ -36,7 +36,9 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f k8s/'
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    bat 'kubectl apply -f k8s/ --kubeconfig="%KUBECONFIG%"'
+                }
             }
         }
     }
