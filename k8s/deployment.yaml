@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: ml-prediction-api
-          image: saniyagharat25/cardioanalytics:12
+          image: saniyagharat25/cardioanalytics:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000

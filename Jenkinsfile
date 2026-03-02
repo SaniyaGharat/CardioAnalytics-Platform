@@ -29,7 +29,9 @@ pipeline {
                     passwordVariable: 'PASS')]) {
 
                     bat 'docker login -u "%USER%" -p "%PASS%"'
-                    bat 'docker push %IMAGE_NAME%:%TAG%'
+                    bat "docker push %IMAGE_NAME%:%TAG%"
+                    bat "docker tag %IMAGE_NAME%:%TAG% %IMAGE_NAME%:latest"
+                    bat "docker push %IMAGE_NAME%:latest"
                 }
             }
         }
@@ -38,6 +40,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                     bat 'kubectl apply -f k8s/ --kubeconfig="%KUBECONFIG%"'
+                    bat 'kubectl rollout restart deployment/ml-prediction-api -n ml-production --kubeconfig="%KUBECONFIG%"'
                 }
             }
         }
