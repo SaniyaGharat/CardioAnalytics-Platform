@@ -28,12 +28,7 @@ pipeline {
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS')]) {
 
-                    // Safe Windows login: Write to a temporary file and pipe it in
-                    bat '''
-                        echo %PASS%> docker_pass.txt
-                        type docker_pass.txt | docker login -u %USER% --password-stdin
-                        del docker_pass.txt
-                    '''
+                    bat 'docker login -u "%USER%" -p "%PASS%"'
                     bat 'docker push %IMAGE_NAME%:%TAG%'
                 }
             }
