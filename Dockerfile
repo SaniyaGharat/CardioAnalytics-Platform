@@ -20,8 +20,7 @@ WORKDIR /build
 
 # Install Python dependencies into a virtual env for easy copy
 COPY requirements.txt .
-RUN python -m venv /opt/venv && \
-    /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # ════════════════════════════════════════════════════
 # STAGE 2: Runtime – lean production image

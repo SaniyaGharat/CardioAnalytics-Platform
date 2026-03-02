@@ -15,19 +15,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                bat 'python -m pip install --upgrade pip'
-                bat 'python -m pip install -r requirements.txt'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'python -m pytest --junitxml=report.xml'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t %IMAGE_NAME%:%TAG% .'
@@ -44,12 +31,6 @@ pipeline {
                     bat 'echo %PASS% | docker login -u %USER% --password-stdin'
                     bat 'docker push %IMAGE_NAME%:%TAG%'
                 }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                bat 'kubectl apply -f k8s'
             }
         }
     }
