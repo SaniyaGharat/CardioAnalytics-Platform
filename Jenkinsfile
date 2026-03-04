@@ -38,10 +38,8 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                    bat 'kubectl apply -f k8s/ --kubeconfig="%KUBECONFIG%"'
-                    bat 'kubectl rollout restart deployment/ml-prediction-api -n ml-production --kubeconfig="%KUBECONFIG%"'
-                }
+                bat 'kubectl apply -f k8s/'
+                bat 'kubectl rollout restart deployment cardioanalytics'
             }
         }
     }
