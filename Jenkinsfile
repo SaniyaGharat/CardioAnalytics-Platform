@@ -37,6 +37,9 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
+            environment {
+                KUBECONFIG = "C:\\Users\\Saniya Gharat\\.kube\\config"
+            }
             steps {
                 bat 'kubectl apply -f k8s/'
                 bat 'kubectl rollout restart deployment cardioanalytics'
