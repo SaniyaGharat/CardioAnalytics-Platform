@@ -152,8 +152,8 @@ APDD/
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/your-username/APDD.git
-cd APDD
+git clone https://github.com/SaniyaGharat/CardioAnalytics-Platform.git
+cd CardioAnalytics-Platform
 
 # Create virtual environment
 python -m venv venv
@@ -215,10 +215,10 @@ python -m pytest tests/ -v
 
 ```bash
 # Build
-docker build -t ml-prediction-api:latest .
+docker build -t saniyagharat25/cardioanalytics:latest .
 
 # Run
-docker run -p 8000:8000 ml-prediction-api:latest
+docker run -p 8000:8000 saniyagharat25/cardioanalytics:latest
 ```
 
 ### Local Stack (API + Prometheus + Grafana)
@@ -238,9 +238,9 @@ docker-compose up -d
 ### Image Tagging Strategy
 
 ```
-ml-prediction-api:latest              # Latest build
-ml-prediction-api:<build>-<sha7>      # Jenkins build: BUILD_NUMBER + short commit SHA
-ml-prediction-api:v1.0.0              # Semantic version for releases
+saniyagharat25/cardioanalytics:latest              # Latest build
+saniyagharat25/cardioanalytics:<build>-<sha7>      # Jenkins build: BUILD_NUMBER + short commit SHA
+saniyagharat25/cardioanalytics:v1.0.0              # Semantic version for releases
 ```
 
 ---
@@ -474,7 +474,7 @@ main ─────────────────────────
 ### Quick Start (Local)
 ```bash
 # 1. Clone and install
-git clone https://github.com/your-username/APDD.git && cd APDD
+git clone https://github.com/SaniyaGharat/CardioAnalytics-Platform.git && cd CardioAnalytics-Platform
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
