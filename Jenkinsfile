@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 bat 'kubectl apply -f k8s/'
-                bat 'kubectl rollout restart deployment ml-prediction-api'
+                bat 'kubectl rollout restart deployment ml-prediction-api -n ml-production'
             }
         }
     }
